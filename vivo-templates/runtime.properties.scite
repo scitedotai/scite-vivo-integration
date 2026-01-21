@@ -1,0 +1,17 @@
+# Scite Badges Configuration for VIVO
+# Add these properties to your VIVO runtime.properties file
+# Location: $VIVO_HOME/config/runtime.properties
+
+# ----------------
+# Scite badges
+# ----------------
+# Options to embed Scite badges on information resource pages
+# See the Scite documentation: https://scite.ai/badge
+
+resource.scite=enabled
+resource.scite.displayto=right
+resource.scite.layout=horizontal
+resource.scite.show-zero=false
+resource.scite.small=false
+resource.scite.show-labels=false
+resource.scite.tally-show=true

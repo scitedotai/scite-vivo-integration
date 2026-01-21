@@ -11,6 +11,7 @@ Import publication data with Scite citation analytics into VIVO.
 - ✅ Creates authorship relationships with author order
 - ✅ Links to Scite report URLs
 - ✅ Generates VIVO-compatible RDF (N-Triples format)
+- ✅ **Interactive Scite badges** on VIVO publication pages showing citation context
 
 ## Prerequisites
 
@@ -120,6 +121,67 @@ python scite_to_vivo.py --csv papers.csv --column doi --limit 10 --password YOUR
 - Links authors to publications
 - Preserves author order/rank
 
+## Scite Badge Integration
+
+This integration includes **Scite badges** that display citation context on VIVO publication pages. When you import papers with DOIs, interactive Scite badges automatically appear next to publications, showing:
+
+- **Supporting citations** (green)
+- **Contrasting citations** (red)
+- **Mentioning citations** (gray)
+- Direct link to full Scite report
+
+### Configuring Scite Badges
+
+Scite badges are configured in VIVO's `runtime.properties`. Default settings:
+
+```properties
+resource.scite=enabled
+resource.scite.displayto=right
+resource.scite.layout=horizontal
+resource.scite.show-zero=false
+resource.scite.small=false
+resource.scite.show-labels=false
+resource.scite.tally-show=true
+```
+
+**Configuration Options:**
+- `displayto`: Badge position (`left` or `right`)
+- `layout`: Badge orientation (`horizontal` or `vertical`)
+- `show-zero`: Show badge even when citation count is zero
+- `small`: Use compact badge size
+- `show-labels`: Show text labels for each citation type
+- `tally-show`: Display numeric tallies
+
+### VIVO Template Files
+
+The integration includes custom Freemarker templates:
+
+1. **`individual-scite.ftl`** - Renders Scite badge when DOI is present
+2. **`individual.ftl`** - Modified to include Scite badge template
+
+These templates should be placed in:
+- Source: `$VIVO_HOME/src/main/resources/templates/freemarker/body/`
+- Deployed: `$TOMCAT_HOME/webapps/vivo/templates/freemarker/body/`
+
+After modifying templates:
+```bash
+# Rebuild VIVO
+cd $VIVO_INSTALL/VIVO
+mvn install -s installer/settings.xml -DskipTests
+
+# Copy templates to deployed webapp (if not included in build)
+cp $VIVO_HOME/src/main/resources/templates/freemarker/body/partials/individual/individual-scite.ftl \
+   $TOMCAT_HOME/webapps/vivo/templates/freemarker/body/partials/individual/
+
+cp $VIVO_HOME/src/main/resources/templates/freemarker/body/individual/individual.ftl \
+   $TOMCAT_HOME/webapps/vivo/templates/freemarker/body/individual/
+
+# Restart Tomcat
+brew services restart tomcat@9  # macOS with Homebrew
+# OR
+sudo systemctl restart tomcat9  # Linux systemd
+```
+
 ## Viewing Data in VIVO
 
 After importing, you can view your papers at:
@@ -127,6 +189,8 @@ After importing, you can view your papers at:
 1. Browse: http://localhost:8080/vivo/research → Click "Academic Article"
 2. Search: Use the search box on the VIVO homepage
 3. Index: Click "Index" in the top menu for alphabetical list
+
+**Scite badges** will automatically appear on publication pages for papers with DOIs.
 
 ## Security Best Practices
 
@@ -187,7 +251,7 @@ flake8 scite_to_vivo.py
 
 ## Future Enhancements
 
-- [ ] Add Scite badges to VIVO UI
+- [x] Add Scite badges to VIVO UI ✅
 - [ ] Custom VIVO themes for citation visualization
 - [ ] Automated sync with Scite API
 - [ ] Citation alerts and notifications
