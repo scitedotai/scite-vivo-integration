@@ -22,7 +22,7 @@ Import publication data with Scite citation analytics into VIVO.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/scite-vivo-integration.git
+git clone https://github.com/scitedotai/scite-vivo-integration.git
 cd scite-vivo-integration
 ```
 
@@ -212,7 +212,7 @@ MIT License - see LICENSE file for details
 
 - VIVO Documentation: https://wiki.lyrasis.org/display/VIVODOC115x/
 - Scite API: https://api.scite.ai/docs
-- Issues: https://github.com/YOUR_USERNAME/scite-vivo-integration/issues
+- Issues: https://github.com/scitedotai/scite-vivo-integration/issues
 
 ## Citation
 
@@ -221,8 +221,8 @@ If you use this tool in your research, please cite:
 ```bibtex
 @software{scite_vivo_integration,
   title = {Scite to VIVO Integration},
-  author = {Your Name},
+  author = {Scite},
   year = {2026},
-  url = {https://github.com/YOUR_USERNAME/scite-vivo-integration}
+  url = {https://github.com/scitedotai/scite-vivo-integration}
 }
 ```
